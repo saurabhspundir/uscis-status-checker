@@ -14,7 +14,7 @@ public static class CaseEndpoints
     private static async Task<IResult> HandleGetCaseStatus(
         string caseNumber,
         DailyRequestCounter counter,
-        UscisClient uscisClient,
+        IUscisClient uscisClient,
         IOptions<CaseStatusApiOptions> options,
         ILoggerFactory loggerFactory,
         CancellationToken ct)

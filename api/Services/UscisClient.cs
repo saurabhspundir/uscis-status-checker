@@ -5,7 +5,7 @@ using Uscis.Shared;
 
 namespace UscisApi;
 
-public sealed class UscisClient : IAsyncDisposable
+public sealed class UscisClient : IUscisClient, IAsyncDisposable
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ApiOptions _apiOptions;

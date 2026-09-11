@@ -25,7 +25,7 @@ builder.Services.AddHttpClient("uscis", client =>
 
 builder.Services.AddSingleton<OAuthTokenProvider>();
 builder.Services.AddSingleton<DailyRequestCounter>();
-builder.Services.AddSingleton<UscisClient>();
+builder.Services.AddSingleton<IUscisClient, UscisClient>();
 
 builder.Services.AddCors(options =>
     options.AddPolicy("LocalDev", policy =>
@@ -43,3 +43,5 @@ app.MapOpenApi();
 app.MapCaseEndpoints();
 
 app.Run();
+
+public partial class Program { }
