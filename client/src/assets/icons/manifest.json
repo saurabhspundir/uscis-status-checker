@@ -1,0 +1,100 @@
+[
+  {
+    "file": "case-track-icon.png",
+    "source_crop": [
+      185,
+      315,
+      500,
+      615
+    ],
+    "size": [
+      315,
+      300
+    ],
+    "role": "Case Track Icon"
+  },
+  {
+    "file": "status-updates-icon.png",
+    "source_crop": [
+      610,
+      335,
+      770,
+      480
+    ],
+    "size": [
+      160,
+      145
+    ],
+    "role": "Status Updates Icon"
+  },
+  {
+    "file": "timeline-view-icon.png",
+    "source_crop": [
+      840,
+      335,
+      990,
+      480
+    ],
+    "size": [
+      150,
+      145
+    ],
+    "role": "Timeline View Icon"
+  },
+  {
+    "file": "case-details-icon.png",
+    "source_crop": [
+      1050,
+      335,
+      1185,
+      480
+    ],
+    "size": [
+      135,
+      145
+    ],
+    "role": "Case Details Icon"
+  },
+  {
+    "file": "case-details-icon-secondary.png",
+    "source_crop": [
+      625,
+      525,
+      775,
+      665
+    ],
+    "size": [
+      150,
+      140
+    ],
+    "role": "Case Details Icon Secondary"
+  },
+  {
+    "file": "alerts-icon.png",
+    "source_crop": [
+      845,
+      525,
+      975,
+      665
+    ],
+    "size": [
+      130,
+      140
+    ],
+    "role": "Alerts Icon"
+  },
+  {
+    "file": "history-log-icon.png",
+    "source_crop": [
+      1048,
+      525,
+      1180,
+      665
+    ],
+    "size": [
+      132,
+      140
+    ],
+    "role": "History Log Icon"
+  }
+]
