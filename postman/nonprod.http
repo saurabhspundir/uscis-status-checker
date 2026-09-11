@@ -1,0 +1,17 @@
+@baseUrl = {{baseUrl}}
+@clientId = {{clientId}}
+@clientSecret = {{clientSecret}}
+@receiptNumber = {{receiptNumber}}
+
+### Get OAuth access token
+# @name getAccessToken
+POST {{baseUrl}}/oauth/accesstoken
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+client_id={{clientId}}&client_secret={{clientSecret}}&grant_type=client_credentials
+
+### Get case status
+GET {{baseUrl}}/case-status/{{receiptNumber}}
+Accept: application/json
+Authorization: Bearer {{getAccessToken.response.body.access_token}}

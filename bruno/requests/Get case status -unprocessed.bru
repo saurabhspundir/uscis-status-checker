@@ -1,0 +1,20 @@
+meta {
+  name: Get case status -unprocessed
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/case-status/PAC9999103403
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+  Authorization: Bearer {{accessToken}}
+}
+
+vars:pre-request {
+  baseUrl: https://api-int.uscis.gov
+}

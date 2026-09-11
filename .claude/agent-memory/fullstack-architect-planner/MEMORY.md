@@ -1,0 +1,1 @@
+- [USCIS Project Architecture](project_architecture.md) — Monorepo layout, poller conventions, OAuthTokenProvider pattern, receipt validator regex, planned api/ and client/ projects

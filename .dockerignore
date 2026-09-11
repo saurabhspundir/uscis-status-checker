@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+**/logs/
+**/*.user
+**/.vs/
+**/.vscode/
+**/Properties/launchSettings.json
+.git/
+.claude/
+bruno/
+client/
+todo.md
+.env
+.env.*

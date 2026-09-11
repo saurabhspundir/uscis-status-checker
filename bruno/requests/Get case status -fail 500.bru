@@ -1,0 +1,20 @@
+meta {
+  name: Get case status -fail 500
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/case-statusa/EAC9999103417
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+  Authorization: Bearer {{accessToken}}
+}
+
+vars:pre-request {
+  baseUrl: https://api-int.uscis.gov
+}

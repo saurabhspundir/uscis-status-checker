@@ -1,0 +1,10 @@
+- docker
+- server deploy/ hosting
+- rate limiting api
+- error message 
+- prod limit (Daily Quota is limited to 400,000 request and resets everyday at -04:00 UTC (Midnight EST)). API Concurrency limit is set to 10 Transactions Per Second (TPS). Allows 1 request every 100 millisecond(ms)
+- better UI (PWA)
+- api health check
+- api swagger
+- MCP on API
+- caching 

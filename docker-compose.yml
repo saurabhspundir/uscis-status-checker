@@ -1,0 +1,30 @@
+services:
+  api:
+    image: uscis-api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      OAuth__ClientId: ${OAUTH_CLIENT_ID}
+      OAuth__ClientSecret: ${OAUTH_CLIENT_SECRET}
+    restart: unless-stopped
+
+  client:
+    image: uscis-client:${TAG:-latest}
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  poller:
+    image: uscis-poller:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: poller/Dockerfile
+    environment:
+      OAuth__ClientId: ${OAUTH_CLIENT_ID}
+      OAuth__ClientSecret: ${OAUTH_CLIENT_SECRET}
+    restart: unless-stopped

@@ -55,3 +55,31 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+## Poller
+poller/logs/
+
+## Claude
+.claude/.agent-call-count-*
+.claude/worktrees/
+
+## .NET build outputs
+**/bin/
+**/obj/
+*.user
+*.suo
+.vs/
+
+## ASP.NET
+**/appsettings.*.local.json
+**/appsettings.local.json
+api/logs/
+
+## React / Node
+client/node_modules/
+client/dist/
+client/.env.local
+
+## Environment / secrets — never commit real credentials
+.env
+.env.*
+!.env.prod.example

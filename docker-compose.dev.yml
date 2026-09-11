@@ -1,0 +1,60 @@
+services:
+  api:
+    build:
+      target: build
+    volumes:
+      - .:/src
+      - api-obj:/src/api/obj
+      - api-bin:/src/api/bin
+      - api-shared-obj:/src/Uscis.Shared/obj
+      - api-shared-bin:/src/Uscis.Shared/bin
+    ports:
+      - "5200:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      OAuth__ClientId: ${OAUTH_CLIENT_ID:?OAUTH_CLIENT_ID must be set in .env.dev}
+      OAuth__ClientSecret: ${OAUTH_CLIENT_SECRET:?OAUTH_CLIENT_SECRET must be set in .env.dev}
+    command: dotnet watch run --project api/UscisApi.csproj --no-launch-profile
+    restart: "no"
+
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./client:/app
+      - client-node-modules:/app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_BASE_URL: http://localhost:5200
+    restart: "no"
+
+  poller:
+    build:
+      target: build
+    volumes:
+      - .:/src
+      - poller-obj:/src/poller/obj
+      - poller-bin:/src/poller/bin
+      - poller-shared-obj:/src/Uscis.Shared/obj
+      - poller-shared-bin:/src/Uscis.Shared/bin
+    environment:
+      DOTNET_ENVIRONMENT: Development
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      OAuth__ClientId: ${OAUTH_CLIENT_ID:?OAUTH_CLIENT_ID must be set in .env.dev}
+      OAuth__ClientSecret: ${OAUTH_CLIENT_SECRET:?OAUTH_CLIENT_SECRET must be set in .env.dev}
+    command: dotnet watch run --project poller/UscisApiPoller.csproj --no-launch-profile
+    restart: "no"
+
+volumes:
+  api-obj:
+  api-bin:
+  api-shared-obj:
+  api-shared-bin:
+  client-node-modules:
+  poller-obj:
+  poller-bin:
+  poller-shared-obj:
+  poller-shared-bin:
