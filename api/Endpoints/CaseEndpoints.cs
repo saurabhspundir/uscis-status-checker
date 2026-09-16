@@ -8,7 +8,8 @@ public static class CaseEndpoints
     {
         app.MapGet("/api/case/{caseNumber}", HandleGetCaseStatus)
            .WithName("GetCaseStatus")
-           .WithOpenApi();
+           .WithOpenApi()
+           .RequireAuthorization();
     }
 
     private static async Task<IResult> HandleGetCaseStatus(

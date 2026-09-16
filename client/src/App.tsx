@@ -1,9 +1,15 @@
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { SearchForm } from './components/SearchForm';
 import { ErrorBanner } from './components/ErrorBanner';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { CaseStatusCard } from './components/CaseStatusCard';
 import { HistoryTimeline } from './components/HistoryTimeline';
+import { LoginPage } from './pages/LoginPage';
+import { TermsPage } from './pages/TermsPage';
+import { PrivacyPage } from './pages/PrivacyPage';
+import { ProtectedRoute } from './auth/ProtectedRoute';
+import { useAuth } from './auth/AuthContext';
 import { fetchCaseStatus } from './api/uscisApi';
 import { isApiError } from './types/caseStatus';
 import type { CaseStatusResponse } from './types/caseStatus';
@@ -23,7 +29,8 @@ function mapErrorMessage(e: unknown): string {
   return 'An unexpected error occurred.';
 }
 
-function App() {
+function MainApp() {
+  const { user, logout } = useAuth();
   const [status, setStatus] = useState<Status>('idle');
   const [data, setData] = useState<CaseStatusResponse | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -47,6 +54,10 @@ function App() {
       <header className="app-header">
         <h1>USCIS Case Status Lookup</h1>
         <p className="subtitle">Check the status and history of your USCIS case</p>
+        <div className="header-user">
+          <span>{user?.displayName ?? user?.email}</span>
+          <button onClick={logout}>Sign out</button>
+        </div>
       </header>
       <main className="app-main">
         <SearchForm onSearch={handleSearch} isLoading={status === 'loading'} />
@@ -60,6 +71,24 @@ function App() {
         )}
       </main>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route
+        path="/*"
+        element={
+          <ProtectedRoute>
+            <MainApp />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
 
