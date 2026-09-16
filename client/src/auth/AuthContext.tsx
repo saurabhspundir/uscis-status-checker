@@ -7,8 +7,9 @@ interface AuthState {
 }
 
 interface AuthContextValue extends AuthState {
-  login: (idToken: string) => Promise<'success' | 'requiresInvitation' | 'error'>;
-  loginWithInvite: (idToken: string, invitationCode: string) => Promise<'success' | 'error'>;
+  login: (idToken: string) => Promise<'success' | 'requiresInvitation' | 'requiresTermsAcceptance' | 'error'>;
+  loginWithInvite: (idToken: string, invitationCode: string) => Promise<'success' | 'requiresTermsAcceptance' | 'error'>;
+  loginWithTermsAccepted: (idToken: string, invitationCode?: string) => Promise<'success' | 'error'>;
   logout: () => void;
 }
 
@@ -32,17 +33,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   }, []);
 
-  const login = useCallback(async (idToken: string): Promise<'success' | 'requiresInvitation' | 'error'> => {
+  const login = useCallback(async (idToken: string): Promise<'success' | 'requiresInvitation' | 'requiresTermsAcceptance' | 'error'> => {
     const result = await googleLogin(idToken);
     if (result.type === 'success') {
       persist({ token: result.data.token, user: result.data.user });
       return 'success';
     }
-    return result.type === 'requiresInvitation' ? 'requiresInvitation' : 'error';
+    if (result.type === 'requiresInvitation') return 'requiresInvitation';
+    if (result.type === 'requiresTermsAcceptance') return 'requiresTermsAcceptance';
+    return 'error';
   }, [persist]);
 
-  const loginWithInvite = useCallback(async (idToken: string, invitationCode: string): Promise<'success' | 'error'> => {
+  const loginWithInvite = useCallback(async (idToken: string, invitationCode: string): Promise<'success' | 'requiresTermsAcceptance' | 'error'> => {
     const result = await googleLogin(idToken, invitationCode);
+    if (result.type === 'success') {
+      persist({ token: result.data.token, user: result.data.user });
+      return 'success';
+    }
+    if (result.type === 'requiresTermsAcceptance') return 'requiresTermsAcceptance';
+    return 'error';
+  }, [persist]);
+
+  const loginWithTermsAccepted = useCallback(async (idToken: string, invitationCode?: string): Promise<'success' | 'error'> => {
+    const result = await googleLogin(idToken, invitationCode, true);
     if (result.type === 'success') {
       persist({ token: result.data.token, user: result.data.user });
       return 'success';
@@ -56,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ ...state, login, loginWithInvite, logout }}>
+    <AuthContext.Provider value={{ ...state, login, loginWithInvite, loginWithTermsAccepted, logout }}>
       {children}
     </AuthContext.Provider>
   );

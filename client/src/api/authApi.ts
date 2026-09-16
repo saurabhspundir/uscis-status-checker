@@ -16,16 +16,18 @@ export interface AuthResponse {
 export type GoogleLoginResult =
   | { type: 'success'; data: AuthResponse }
   | { type: 'requiresInvitation' }
+  | { type: 'requiresTermsAcceptance' }
   | { type: 'error'; message: string };
 
 export async function googleLogin(
   idToken: string,
-  invitationCode?: string
+  invitationCode?: string,
+  acceptedTerms?: boolean
 ): Promise<GoogleLoginResult> {
   const res = await fetch(`${BASE}/api/auth/google`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ idToken, invitationCode }),
+    body: JSON.stringify({ idToken, invitationCode, acceptedTerms: acceptedTerms ?? false }),
   });
 
   if (res.ok) {
@@ -36,6 +38,7 @@ export async function googleLogin(
   if (res.status === 403) {
     const body = await res.json();
     if (body.requiresInvitation) return { type: 'requiresInvitation' };
+    if (body.requiresTermsAcceptance) return { type: 'requiresTermsAcceptance' };
   }
 
   const body = await res.json().catch(() => ({ error: 'Unknown error' }));

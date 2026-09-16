@@ -7,6 +7,10 @@ namespace UscisApi;
 
 public static class AuthEndpoints
 {
+    private const string CurrentVersion = "1.0";
+    private const string DocTypeTerms = "terms";
+    private const string DocTypePrivacy = "privacy";
+
     public static void MapAuthEndpoints(this WebApplication app)
     {
         app.MapPost("/api/auth/google", HandleGoogleLogin)
@@ -15,7 +19,7 @@ public static class AuthEndpoints
            .AllowAnonymous();
     }
 
-    private record GoogleLoginRequest(string IdToken, string? InvitationCode);
+    private record GoogleLoginRequest(string IdToken, string? InvitationCode, bool AcceptedTerms = false);
 
     private static async Task<IResult> HandleGoogleLogin(
         GoogleLoginRequest request,
@@ -51,6 +55,30 @@ public static class AuthEndpoints
 
         if (user is not null)
         {
+            var acceptedDocs = await db.UserAgreements
+                .Where(ua => ua.UserId == user.Id && ua.Version == CurrentVersion
+                          && (ua.DocumentType == DocTypeTerms || ua.DocumentType == DocTypePrivacy))
+                .Select(ua => ua.DocumentType)
+                .ToListAsync(ct);
+
+            var hasAgreed = acceptedDocs.Contains(DocTypeTerms) && acceptedDocs.Contains(DocTypePrivacy);
+
+            if (!hasAgreed)
+            {
+                if (!request.AcceptedTerms)
+                {
+                    return Results.Json(new { requiresTermsAcceptance = true }, statusCode: 403);
+                }
+
+                var consentTs = DateTimeOffset.UtcNow;
+                if (!acceptedDocs.Contains(DocTypeTerms))
+                    db.UserAgreements.Add(new UserAgreement { Id = Guid.NewGuid(), UserId = user.Id, DocumentType = DocTypeTerms, Version = CurrentVersion, AcceptedAt = consentTs });
+                if (!acceptedDocs.Contains(DocTypePrivacy))
+                    db.UserAgreements.Add(new UserAgreement { Id = Guid.NewGuid(), UserId = user.Id, DocumentType = DocTypePrivacy, Version = CurrentVersion, AcceptedAt = consentTs });
+
+                await db.SaveChangesAsync(ct);
+            }
+
             var token = jwtService.Issue(user);
             return Results.Ok(BuildResponse(token, user));
         }
@@ -76,7 +104,13 @@ public static class AuthEndpoints
             return Results.BadRequest(new { error = "Invalid invitation code." });
         }
 
-        // 5. Create new user
+        // 5. New user must also accept terms before account is created
+        if (!request.AcceptedTerms)
+        {
+            return Results.Json(new { requiresTermsAcceptance = true }, statusCode: 403);
+        }
+
+        // 6. Create new user
         var newUser = new User
         {
             Id = Guid.NewGuid(),
@@ -90,9 +124,15 @@ public static class AuthEndpoints
         };
 
         db.Users.Add(newUser);
+
+        // 7. Record agreement for both documents
+        var agreedAt = DateTimeOffset.UtcNow;
+        db.UserAgreements.Add(new UserAgreement { Id = Guid.NewGuid(), UserId = newUser.Id, DocumentType = DocTypeTerms, Version = CurrentVersion, AcceptedAt = agreedAt });
+        db.UserAgreements.Add(new UserAgreement { Id = Guid.NewGuid(), UserId = newUser.Id, DocumentType = DocTypePrivacy, Version = CurrentVersion, AcceptedAt = agreedAt });
+
         await db.SaveChangesAsync(ct);
 
-        // 6. Mark matching Customer as converted (if any)
+        // 8. Mark matching Customer as converted (if any)
         var customer = await db.Customers.FirstOrDefaultAsync(c => c.Email == email, ct);
         if (customer is not null && customer.ConvertedUserId is null)
         {

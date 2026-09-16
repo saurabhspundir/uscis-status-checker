@@ -6,6 +6,8 @@ import { LoadingSpinner } from './components/LoadingSpinner';
 import { CaseStatusCard } from './components/CaseStatusCard';
 import { HistoryTimeline } from './components/HistoryTimeline';
 import { LoginPage } from './pages/LoginPage';
+import { TermsPage } from './pages/TermsPage';
+import { PrivacyPage } from './pages/PrivacyPage';
 import { ProtectedRoute } from './auth/ProtectedRoute';
 import { useAuth } from './auth/AuthContext';
 import { fetchCaseStatus } from './api/uscisApi';
@@ -76,6 +78,8 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
       <Route
         path="/*"
         element={

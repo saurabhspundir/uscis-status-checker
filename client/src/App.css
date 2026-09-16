@@ -260,3 +260,268 @@ body {
   text-align: center;
   padding: 1rem;
 }
+
+/* Header user info */
+.header-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.header-user button {
+  padding: 0.3rem 0.9rem;
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.header-user button:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* Login page */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;
+}
+
+.login-card {
+  background: white;
+  border-radius: 10px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+}
+
+.login-card h1 {
+  font-size: 1.75rem;
+  color: #1a3a6e;
+  margin-bottom: 0.5rem;
+}
+
+.login-card p {
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.error-text {
+  color: #c0392b;
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal {
+  background: white;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.modal--terms {
+  max-width: 520px;
+}
+
+.modal h2 {
+  font-size: 1.25rem;
+  color: #1a3a6e;
+  margin-bottom: 0.75rem;
+}
+
+.modal p {
+  font-size: 1rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.modal input[type="text"] {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid #d0d7e6;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.modal input[type="text"]:focus {
+  outline: none;
+  border-color: #1a3a6e;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+}
+
+.modal-actions button {
+  padding: 0.6rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+}
+
+.modal-actions button[type="button"] {
+  background: #e2e8f0;
+  color: #2d3748;
+}
+
+.modal-actions button[type="button"]:hover:not(:disabled) {
+  background: #cbd5e0;
+}
+
+.modal-actions button[type="submit"] {
+  background: #1a3a6e;
+  color: white;
+}
+
+.modal-actions button[type="submit"]:hover:not(:disabled) {
+  background: #2a5298;
+}
+
+.modal-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Terms acceptance modal */
+.terms-links {
+  list-style: none;
+  margin-bottom: 1.25rem;
+}
+
+.terms-links li {
+  margin-bottom: 0.4rem;
+}
+
+.terms-links a {
+  color: #1a3a6e;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #2d3748;
+  line-height: 1.5;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Policy pages (Terms / Privacy) */
+.policy-page {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 2rem 1rem;
+}
+
+.policy-container {
+  max-width: 760px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 10px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.policy-container h1 {
+  font-size: 2rem;
+  color: #1a3a6e;
+  margin-bottom: 0.5rem;
+}
+
+.policy-meta {
+  font-size: 0.9rem;
+  color: #718096;
+  margin-bottom: 2rem;
+}
+
+.policy-container section {
+  margin-bottom: 2rem;
+}
+
+.policy-container h2 {
+  font-size: 1.15rem;
+  color: #1a3a6e;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #e8edf5;
+}
+
+.policy-container p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #2d3748;
+  margin-bottom: 0.75rem;
+}
+
+.policy-container ul {
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.policy-container li {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #2d3748;
+  margin-bottom: 0.35rem;
+}
+
+.policy-container a {
+  color: #1a3a6e;
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .policy-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .policy-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .modal {
+    padding: 1.5rem 1rem;
+  }
+}

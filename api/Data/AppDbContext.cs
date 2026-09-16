@@ -8,6 +8,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<User> Users => Set<User>();
     public DbSet<InvitationCode> InvitationCodes => Set<InvitationCode>();
     public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<UserAgreement> UserAgreements => Set<UserAgreement>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -36,6 +37,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(ic => ic.CreatedAt).HasColumnName("CreatedAt");
             e.Property(ic => ic.ExpiresAt).HasColumnName("ExpiresAt");
             e.HasIndex(ic => ic.Code).IsUnique();
+        });
+
+        builder.Entity<UserAgreement>(e =>
+        {
+            e.ToTable("user_agreements");
+            e.HasKey(ua => ua.Id);
+            e.Property(ua => ua.Id).HasColumnName("Id");
+            e.Property(ua => ua.UserId).HasColumnName("UserId");
+            e.Property(ua => ua.DocumentType).HasColumnName("DocumentType");
+            e.Property(ua => ua.Version).HasColumnName("Version");
+            e.Property(ua => ua.AcceptedAt).HasColumnName("AcceptedAt");
+            e.HasIndex(ua => new { ua.UserId, ua.DocumentType, ua.Version }).IsUnique();
+            e.HasOne<User>()
+             .WithMany()
+             .HasForeignKey(ua => ua.UserId)
+             .OnDelete(DeleteBehavior.Cascade);
         });
 
         builder.Entity<Customer>(e =>
