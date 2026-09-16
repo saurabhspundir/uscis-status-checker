@@ -38,7 +38,10 @@ describe('fetchCaseStatus', () => {
     vi.mocked(fetch).mockResolvedValue(mockResponse(payload, true));
 
     await fetchCaseStatus('  eac9999103403  ');
-    expect(fetch).toHaveBeenCalledWith(expect.stringContaining('/EAC9999103403'));
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringContaining('/EAC9999103403'),
+      expect.objectContaining({ headers: expect.any(Object) })
+    );
   });
 
   it('throws ApiError when response is not ok', async () => {
