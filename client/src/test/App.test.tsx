@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '../theme/ThemeContext';
 import App from '../App';
 import * as uscisApi from '../api/uscisApi';
 import type { CaseStatusResponse } from '../types/caseStatus';
@@ -38,9 +39,11 @@ const successResponse: CaseStatusResponse = {
 
 function renderApp(initialEntry = '/') {
   return render(
-    <MemoryRouter initialEntries={[initialEntry]}>
-      <App />
-    </MemoryRouter>
+    <ThemeProvider>
+      <MemoryRouter initialEntries={[initialEntry]}>
+        <App />
+      </MemoryRouter>
+    </ThemeProvider>
   );
 }
 

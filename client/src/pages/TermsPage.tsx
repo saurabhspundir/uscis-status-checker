@@ -1,6 +1,10 @@
+import { Header } from '../components/Header';
+
 export function TermsPage() {
   return (
-    <div className="policy-page">
+    <>
+      <Header variant="app" />
+      <div className="policy-page">
       <div className="policy-container">
         <h1>Terms of Service</h1>
         <p className="policy-meta">Version 1.0 &mdash; Effective: September 15, 2026</p>
@@ -156,6 +160,7 @@ export function TermsPage() {
           </p>
         </section>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
