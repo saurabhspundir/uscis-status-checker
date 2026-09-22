@@ -87,3 +87,8 @@ client/coverage/
 .env.*
 !.env.prod.example
 coverage/
+
+
+## Bruo env 
+bruno/environments/
+bruno/environments/nonprod.bru

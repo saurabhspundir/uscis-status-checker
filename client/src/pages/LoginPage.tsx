@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../auth/AuthContext';
 import { InvitationCodeModal } from './InvitationCodeModal';
 import { TermsAcceptanceModal } from './TermsAcceptanceModal';
+import { Header } from '../components/Header';
 
 type LoginStep =
   | 'idle'
@@ -11,8 +12,13 @@ type LoginStep =
   | 'requiresTerms';
 
 export function LoginPage() {
-  const { login, loginWithInvite, loginWithTermsAccepted } = useAuth();
+  const { token, login, loginWithInvite, loginWithTermsAccepted, logout } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) logout();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [step, setStep] = useState<LoginStep>('idle');
   const [pendingIdToken, setPendingIdToken] = useState<string | null>(null);
   const [pendingInviteCode, setPendingInviteCode] = useState<string | undefined>(undefined);
@@ -28,7 +34,7 @@ export function LoginPage() {
     const result = await login(idToken);
 
     if (result === 'success') {
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     } else if (result === 'requiresInvitation') {
       setPendingIdToken(idToken);
       setStep('requiresInvitation');
@@ -46,7 +52,7 @@ export function LoginPage() {
     const result = await loginWithInvite(pendingIdToken, code);
 
     if (result === 'success') {
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     } else if (result === 'requiresTermsAcceptance') {
       setPendingInviteCode(code);
       setStep('requiresTerms');
@@ -68,7 +74,7 @@ export function LoginPage() {
     const result = await loginWithTermsAccepted(pendingIdToken, pendingInviteCode);
 
     if (result === 'success') {
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     } else {
       setTermsError('Something went wrong. Please try signing in again.');
     }
@@ -83,14 +89,60 @@ export function LoginPage() {
 
   return (
     <div className="login-page">
-      <div className="login-card">
-        <h1>USCIS Case Status</h1>
-        <p>Sign in to check your case status</p>
-        <GoogleLogin
-          onSuccess={handleGoogleSuccess}
-          onError={() => setLoginError('Google sign-in failed. Please try again.')}
-        />
-        {loginError && <p className="error-text">{loginError}</p>}
+      <Header variant="login" />
+
+      {/* Login Card */}
+      <div className="login-content">
+        <div className="login-card">
+          <div className="login-card-header">
+            <h2>Welcome Back</h2>
+            <p>Sign in to check your case status</p>
+          </div>
+
+          {/* Google Sign In */}
+          <div className="google-signin-wrapper">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => setLoginError('Google sign-in failed. Please try again.')}
+            />
+          </div>
+
+          {loginError && <p className="error-text">{loginError}</p>}
+
+          {/* Footer Links */}
+          <div className="login-footer">
+            <p className="login-footer-text">
+              <a href="/terms">Terms of Service</a>
+              {' '}&bull;{' '}
+              <a href="/privacy">Privacy Policy</a>
+            </p>
+            <p className="login-footer-alt">
+              Don't have an account? <a href="#">Request access</a>
+            </p>
+          </div>
+        </div>
+
+        {/* Trust Indicators */}
+        <div className="trust-indicators">
+          <div className="trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Secure</span>
+          </div>
+          <div className="trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>Official</span>
+          </div>
+          <div className="trust-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Verified</span>
+          </div>
+        </div>
       </div>
 
       {step === 'requiresInvitation' && (

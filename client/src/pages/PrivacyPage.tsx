@@ -1,6 +1,10 @@
+import { Header } from '../components/Header';
+
 export function PrivacyPage() {
   return (
-    <div className="policy-page">
+    <>
+      <Header variant="app" />
+      <div className="policy-page">
       <div className="policy-container">
         <h1>Privacy Policy</h1>
         <p className="policy-meta">Version 1.0 &mdash; Effective: September 15, 2026</p>
@@ -194,6 +198,7 @@ export function PrivacyPage() {
           </p>
         </section>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
