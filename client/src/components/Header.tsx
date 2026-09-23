@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { useTheme } from '../theme/ThemeContext';
 
@@ -74,7 +75,7 @@ export function Header({ variant }: HeaderProps) {
           <div className="header-toggle-row">
             <ThemeToggle />
           </div>
-          <h1>My USCIS Case</h1>
+          <h1><Link to="/" className="header-title-link">My USCIS Case</Link></h1>
           <p>Track Your Immigration Case Status in Real-Time</p>
           <UserActions />
         </header>
@@ -90,7 +91,7 @@ export function Header({ variant }: HeaderProps) {
           <div className="header-toggle-row">
             <ThemeToggle />
           </div>
-          <h1>My USCIS Case</h1>
+          <h1><Link to="/" className="header-title-link">My USCIS Case</Link></h1>
           <p>Track Your Immigration Case Status in Real-Time</p>
           <UserActions />
         </div>
@@ -105,7 +106,7 @@ export function Header({ variant }: HeaderProps) {
         <div className="header-toggle-row">
           <ThemeToggle />
         </div>
-        <h1>My USCIS Case</h1>
+        <h1><Link to="/" className="header-title-link">My USCIS Case</Link></h1>
         <p className="subtitle">Track Your Immigration Case Status in Real-Time</p>
         <UserActions />
       </header>

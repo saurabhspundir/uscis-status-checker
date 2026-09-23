@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 import { requestAccess } from '../api/accessRequestApi';
 
 export function RequestAccessPage() {
@@ -114,6 +115,7 @@ export function RequestAccessPage() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
