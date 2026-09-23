@@ -11,7 +11,7 @@ export function Footer() {
         <Link to="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</Link>
       </nav>
       <p className="footer-copyright">
-        &copy; {year} My USCIS Case Status Checker. All rights reserved.
+        &copy; {year} MyUSCISCase.org. All rights reserved.
       </p>
     </footer>
   );

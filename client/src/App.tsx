@@ -22,6 +22,7 @@ type Status = 'idle' | 'loading' | 'success' | 'error';
 
 function mapErrorMessage(e: unknown): string {
   if (isApiError(e)) {
+    if (e.status === 503) return 'USCIS API is unavailable at this time. Please try again.';
     if (e.error.toLowerCase().includes('daily')) return 'Daily request limit reached. Try again tomorrow.';
     if (e.error.toLowerCase().includes('too many')) return 'Too many requests. Please wait a moment and try again.';
     if (e.error.toLowerCase().includes('invalid')) return 'Invalid receipt number format.';

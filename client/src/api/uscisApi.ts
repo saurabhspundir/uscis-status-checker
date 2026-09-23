@@ -17,6 +17,7 @@ export async function fetchCaseStatus(caseNumber: string): Promise<CaseStatusRes
   });
   if (!res.ok) {
     const err: ApiError = await res.json();
+    err.status = res.status;
     throw err;
   }
   return res.json() as Promise<CaseStatusResponse>;

@@ -24,11 +24,16 @@ export async function googleLogin(
   invitationCode?: string,
   acceptedTerms?: boolean
 ): Promise<GoogleLoginResult> {
-  const res = await fetch(`${BASE}/api/auth/google`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ idToken, invitationCode, acceptedTerms: acceptedTerms ?? false }),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${BASE}/api/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken, invitationCode, acceptedTerms: acceptedTerms ?? false }),
+    });
+  } catch {
+    return { type: 'error', message: 'Unable to reach the server. Please check your connection and try again.' };
+  }
 
   if (res.ok) {
     const data: AuthResponse = await res.json();

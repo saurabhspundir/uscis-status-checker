@@ -23,6 +23,7 @@ export interface ApiError {
   error: string;
   limit?: number;
   count?: number;
+  status?: number;
 }
 
 export function isApiError(e: unknown): e is ApiError {

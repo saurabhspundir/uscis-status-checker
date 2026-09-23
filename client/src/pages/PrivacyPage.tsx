@@ -13,8 +13,8 @@ export function PrivacyPage() {
         <section>
           <h2>1. Who We Are</h2>
           <p>
-            USCIS Case Status Checker ("the App") is operated by Saurabh Pundir
-            (saurabh.pundir@gmail.com). This policy explains how we collect, use, store,
+            USCIS Case Status Checker ("the App") is operated by MyUSCISCase.org
+            (hello@myusciscase.org). This policy explains how we collect, use, store,
             and protect your personal information when you use the App.
           </p>
         </section>
@@ -131,7 +131,7 @@ export function PrivacyPage() {
           <h2>7. Data Deletion</h2>
           <p>
             You may request permanent deletion of all your data at any time. Email{' '}
-            <a href="mailto:saurabh.pundir@gmail.com">saurabh.pundir@gmail.com</a> with
+            <a href="mailto:hello@myusciscase.org">hello@myusciscase.org</a> with
             the subject line "Data Deletion Request." We will confirm receipt within 5
             business days and complete deletion within 30 days.
           </p>
@@ -168,7 +168,7 @@ export function PrivacyPage() {
           </ul>
           <p>
             To exercise any CCPA right, contact us at{' '}
-            <a href="mailto:saurabh.pundir@gmail.com">saurabh.pundir@gmail.com</a>.
+            <a href="mailto:hello@myusciscase.org">hello@myusciscase.org</a>.
           </p>
         </section>
 
@@ -195,7 +195,7 @@ export function PrivacyPage() {
           <h2>12. Contact</h2>
           <p>
             For privacy questions or requests, contact:{' '}
-            <a href="mailto:saurabh.pundir@gmail.com">saurabh.pundir@gmail.com</a>
+            <a href="mailto:hello@myusciscase.org">hello@myusciscase.org</a>
           </p>
         </section>
       </div>

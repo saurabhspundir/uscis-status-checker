@@ -56,7 +56,7 @@ export function TermsAcceptanceModal({ onAccept, onCancel, error }: Props) {
               Cancel
             </button>
             <button type="submit" disabled={submitting || !accepted}>
-              {submitting ? 'Saving…' : 'Accept &amp; Continue'}
+              {submitting ? 'Saving…' : 'Accept & Continue'}
             </button>
           </div>
         </form>
