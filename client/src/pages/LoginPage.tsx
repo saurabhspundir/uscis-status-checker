@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../auth/AuthContext';
 import { InvitationCodeModal } from './InvitationCodeModal';
@@ -117,7 +117,7 @@ export function LoginPage() {
               <a href="/privacy">Privacy Policy</a>
             </p>
             <p className="login-footer-alt">
-              Don't have an account? <a href="#">Request access</a>
+              Don't have an account? <Link to="/request-access">Request access</Link>
             </p>
           </div>
         </div>

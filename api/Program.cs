@@ -19,6 +19,7 @@ builder.Services.Configure<ApiOptions>(builder.Configuration.GetSection("Api"));
 builder.Services.Configure<CaseStatusApiOptions>(builder.Configuration.GetSection("CaseStatusApi"));
 builder.Services.Configure<GoogleOptions>(builder.Configuration.GetSection("Authentication:Google"));
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+builder.Services.Configure<ResendOptions>(builder.Configuration.GetSection("Resend"));
 
 var oauthBaseUrl = builder.Configuration["OAuth:BaseUrl"] ?? "https://api-int.uscis.gov";
 var apiBaseUrl = builder.Configuration["Api:BaseUrl"] ?? "https://api-int.uscis.gov";
@@ -27,11 +28,19 @@ builder.Services.AddHttpClient("oauth", client =>
     client.BaseAddress = new Uri(oauthBaseUrl));
 
 builder.Services.AddHttpClient("uscis", client =>
-    client.BaseAddress = new Uri(apiBaseUrl));
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+    client.DefaultRequestHeaders.Add("demo_id", "4153"); //temporary demo ID for testing, will be removed in production
+});
+
+builder.Services.AddHttpClient("resend", client =>
+    client.BaseAddress = new Uri("https://api.resend.com"));
 
 builder.Services.AddSingleton<OAuthTokenProvider>();
 builder.Services.AddSingleton<DailyRequestCounter>();
+builder.Services.AddSingleton<EmailRequestCounter>();
 builder.Services.AddSingleton<IUscisClient, UscisClient>();
+builder.Services.AddSingleton<IEmailSender, ResendEmailSender>();
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("CustomerConnection")));
@@ -77,6 +86,7 @@ app.UseAuthorization();
 app.MapOpenApi();
 app.MapAuthEndpoints();
 app.MapCaseEndpoints();
+app.MapAccessRequestEndpoints();
 
 app.Run();
 

@@ -760,6 +760,12 @@ p {
   color: var(--text-muted);
 }
 
+textarea.login-input {
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
 .login-options {
   display: flex;
   justify-content: space-between;

@@ -9,3 +9,10 @@ public sealed class UscisApiException(int statusCode, string apiMessage) : Excep
     public int StatusCode { get; } = statusCode;
     public string ApiMessage { get; } = apiMessage;
 }
+
+public sealed class EmailRateLimitException() : Exception("Email provider returned a rate-limit error");
+
+public sealed class EmailSendException(string apiMessage) : Exception(apiMessage)
+{
+    public string ApiMessage { get; } = apiMessage;
+}
