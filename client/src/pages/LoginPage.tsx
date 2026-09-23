@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../auth/AuthContext';
 import { InvitationCodeModal } from './InvitationCodeModal';
 import { TermsAcceptanceModal } from './TermsAcceptanceModal';
 import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
 type LoginStep =
   | 'idle'
@@ -112,12 +113,12 @@ export function LoginPage() {
           {/* Footer Links */}
           <div className="login-footer">
             <p className="login-footer-text">
-              <a href="/terms">Terms of Service</a>
+              <a href="/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a>
               {' '}&bull;{' '}
-              <a href="/privacy">Privacy Policy</a>
+              <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
             </p>
             <p className="login-footer-alt">
-              Don't have an account? <a href="#">Request access</a>
+              Don't have an account? <Link to="/request-access">Request access</Link>
             </p>
           </div>
         </div>
@@ -144,6 +145,8 @@ export function LoginPage() {
           </div>
         </div>
       </div>
+
+      <Footer />
 
       {step === 'requiresInvitation' && (
         <InvitationCodeModal

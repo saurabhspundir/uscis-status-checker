@@ -6,7 +6,9 @@ import { LoadingSpinner } from './components/LoadingSpinner';
 import { CaseStatusCard } from './components/CaseStatusCard';
 import { HistoryTimeline } from './components/HistoryTimeline';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 import { LoginPage } from './pages/LoginPage';
+import { RequestAccessPage } from './pages/RequestAccessPage';
 import { LandingPage } from './pages/LandingPage';
 import { TermsPage } from './pages/TermsPage';
 import { PrivacyPage } from './pages/PrivacyPage';
@@ -63,6 +65,7 @@ function MainApp() {
           </>
         )}
       </main>
+      <Footer />
     </div>
   );
 }
@@ -72,6 +75,7 @@ function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/request-access" element={<RequestAccessPage />} />
       <Route path="/terms" element={<TermsPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route

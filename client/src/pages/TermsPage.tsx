@@ -1,4 +1,5 @@
 import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
 export function TermsPage() {
   return (
@@ -161,6 +162,7 @@ export function TermsPage() {
         </section>
       </div>
       </div>
+      <Footer />
     </>
   );
 }
