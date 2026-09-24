@@ -15,7 +15,7 @@ export function TermsPage() {
           <p>
             USCIS Case Status Checker ("the App") is a private tool that lets invited users
             look up the status of their U.S. immigration cases using the USCIS TORCH API.
-            The App is operated by Saurabh Pundir ("we," "us," or "our").
+            The App is operated by MyUSCISCase.org ("we," "us," or "our").
           </p>
           <p>
             Access is limited to users who have received an invitation. By signing in and
@@ -76,7 +76,7 @@ export function TermsPage() {
           <p>
             You may request permanent deletion of your account and all associated data at
             any time. To submit a deletion request, email{' '}
-            <a href="mailto:saurabh.pundir@gmail.com">saurabh.pundir@gmail.com</a> with
+            <a href="mailto:hello@myusciscase.org">hello@myusciscase.org</a> with
             the subject line "Data Deletion Request." We will complete the deletion within
             30 days of receiving your verified request.
           </p>
@@ -157,7 +157,7 @@ export function TermsPage() {
           <h2>14. Contact</h2>
           <p>
             Questions about these Terms? Contact us at{' '}
-            <a href="mailto:saurabh.pundir@gmail.com">saurabh.pundir@gmail.com</a>.
+            <a href="mailto:hello@myusciscase.org">hello@myusciscase.org</a>.
           </p>
         </section>
       </div>

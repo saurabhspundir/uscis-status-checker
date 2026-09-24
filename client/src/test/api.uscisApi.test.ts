@@ -48,7 +48,7 @@ describe('fetchCaseStatus', () => {
     const errorBody: ApiError = { error: 'Invalid receipt number' };
     vi.mocked(fetch).mockResolvedValue(mockResponse(errorBody, false, 400));
 
-    await expect(fetchCaseStatus('INVALID')).rejects.toEqual(errorBody);
+    await expect(fetchCaseStatus('INVALID')).rejects.toEqual({ ...errorBody, status: 400 });
   });
 
   it('throws a network TypeError when fetch rejects', async () => {

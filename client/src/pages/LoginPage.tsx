@@ -26,24 +26,30 @@ export function LoginPage() {
   const [inviteError, setInviteError] = useState<string | null>(null);
   const [termsError, setTermsError] = useState<string | null>(null);
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   const handleGoogleSuccess = async (credentialResponse: { credential?: string }) => {
     const idToken = credentialResponse.credential;
     if (!idToken) return;
 
     setLoginError(null);
-    const result = await login(idToken);
+    setIsSigningIn(true);
+    try {
+      const result = await login(idToken);
 
-    if (result === 'success') {
-      navigate('/dashboard', { replace: true });
-    } else if (result === 'requiresInvitation') {
-      setPendingIdToken(idToken);
-      setStep('requiresInvitation');
-    } else if (result === 'requiresTermsAcceptance') {
-      setPendingIdToken(idToken);
-      setStep('requiresTerms');
-    } else {
-      setLoginError('Sign-in failed. Please try again.');
+      if (result === 'success') {
+        navigate('/dashboard', { replace: true });
+      } else if (result === 'requiresInvitation') {
+        setPendingIdToken(idToken);
+        setStep('requiresInvitation');
+      } else if (result === 'requiresTermsAcceptance') {
+        setPendingIdToken(idToken);
+        setStep('requiresTerms');
+      } else {
+        setLoginError('Sign-in failed. Please try again.');
+      }
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -102,13 +108,20 @@ export function LoginPage() {
 
           {/* Google Sign In */}
           <div className="google-signin-wrapper">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={() => setLoginError('Google sign-in failed. Please try again.')}
-            />
+            {isSigningIn ? (
+              <div className="spinner-container" role="status" aria-live="polite">
+                <div className="spinner" />
+                <span className="sr-only">Signing in…</span>
+              </div>
+            ) : (
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => setLoginError('Google sign-in failed. Please try again.')}
+              />
+            )}
           </div>
 
-          {loginError && <p className="error-text">{loginError}</p>}
+          {loginError && <p className="error-text" role="alert">{loginError}</p>}
 
           {/* Footer Links */}
           <div className="login-footer">

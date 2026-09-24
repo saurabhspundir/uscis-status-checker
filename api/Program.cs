@@ -67,18 +67,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+var corsAllowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+
 builder.Services.AddCors(options =>
-    options.AddPolicy("LocalDev", policy =>
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+    options.AddPolicy("Default", policy =>
+        policy.WithOrigins(corsAllowedOrigins).AllowAnyMethod().AllowAnyHeader()));
 
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Local"))
-{
-    app.UseCors("LocalDev");
-}
+app.UseCors("Default");
 
 app.UseAuthentication();
 app.UseAuthorization();
